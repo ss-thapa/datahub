@@ -125,11 +125,90 @@ df.loc[-(df['genre'].isin(['Puzzles', 'Strategy', 'Adventure']) & y_10s)].head(4
 
 #longer version
 df.loc[(df['genre'] == 'Racing') & (df['year'].between(2000, 2009)) & ((df['eu_sales'] > df['na_sales']) & (df['eu_sales'] > df['jp_sales']) & (df['eu_sales'] > df['other_sales'])), ['name', 'eu_sales']].sort_values(by='eu_sales',ascending=False).reset_index(drop=True)
+
 # break down version
 
 racing = df['genre'] == 'Racing'
 year_1w = df['year'].between(2000, 2009)
 higher_then_other = (df['eu_sales'] > df['na_sales']) & (df['eu_sales'] > df['jp_sales']) & (df['eu_sales'] > df['other_sales'])
 
+df.loc[(racing & year_1w & higher_then_other), ['name', 'eu_sales']].sort_values(by='eu_sales', ascending=False).reset_index(drop=True)
 
-print(df.loc[(racing & year_1w & higher_then_other), ['name', 'eu_sales']].sort_values(by='eu_sales', ascending=False).reset_index(drop=True))
+
+
+#### unique() and ununique
+
+
+# print(df['platform'].unique())
+# print(df.nunique())
+
+# print(df.select_dtypes('object'))
+
+# for i in df.select_dtypes('object'):     ### itirating orver all the columns which have object datatypes and printing the unique values of those columns
+#     print(df[i].unique())
+
+ps3 = df.loc[df['platform'] == 'PS3']
+
+### nlargest and nsmallest
+
+ps3.nlargest(n=10, columns = 'na_sales').set_index('name').loc[:,'na_sales']
+
+ps3.nsmallest(n=5, columns='global_sales').loc[:, ('name', 'global_sales')]
+
+
+
+
+### matplot
+
+# fig, ax = plt.subplots(2,2, figsize =(20,20))
+
+
+# ps3.nlargest(n=10, columns = 'na_sales').set_index('name').loc[:,'na_sales'].plot.bar(ax = ax[0][0])
+# ax[0][0].set_title('North America')
+
+# ps3.nlargest(n=10, columns = 'jp_sales').set_index('name').loc[:,'jp_sales'].plot.bar(ax = ax[0][1])
+# ax[0][1].set_title('Japan')
+
+# ps3.nlargest(n=10, columns = 'eu_sales').set_index('name').loc[:,'eu_sales'].plot.bar(ax = ax[1][0])
+# ax[1][0].set_title('Europe')
+
+# ps3.nlargest(n=10, columns = 'other_sales').set_index('name').loc[:,'other_sales'].plot.bar(ax = ax[1][1])
+# ax[1][1].set_title('Other')
+
+
+# fig.suptitle("Most Sold PS3 Games By Continent", fontsize = 20)
+# fig.tight_layout()
+# plt.show()
+# # fig.savefig('ps3_sales.jpg')
+
+
+
+## value_counts()
+
+
+# top_100 = ps3.nlargest(n=100, columns='global_sales')
+
+# top_100['genre'].value_counts(normalize=True)
+
+
+# #barh subplots
+
+# fig, ax = plt.subplots(1,2, figsize = (16,8))
+
+# top_100['genre'].value_counts(normalize=True).plot.barh(ax=ax[0])
+
+# top_100['publisher'].value_counts(normalize=True).plot.barh(ax=ax[1])
+# fig.tight_layout()
+# plt.show()
+
+
+
+
+## sort_values
+
+
+# print(ps3.sort_values(by='genre', ascending=True))
+# print(ps3.sort_values(by='year',ascending=False))
+print(ps3.sort_values(by= ['year','global_sales'], ascending=False))
+
+
