@@ -230,7 +230,184 @@ ps3.nsmallest(n=5, columns='global_sales').loc[:, ('name', 'global_sales')]
 
 
 
-xbox_sales = df.loc[df['platform']== 'XB', ['na_sales', 'year']].groupby('year')['na_sales'].sum()
+# xbox_sales = df.loc[df['platform']== 'XB', ['na_sales', 'year']].groupby('year')['na_sales'].sum()
 
-xbox_sales.plot.bar()
-plt.show()
+# xbox_sales.plot.bar()
+# plt.show()
+
+
+
+### qut and qcut
+## cut
+
+
+# print(pd.cut(x = df['year'], bins = 5).value_counts())
+
+### creating the new column with the decades information
+df['decade'] = pd.cut(x = df['year'], bins = [1980,1989,1999,2009,2019], labels=['80s','90s', '00s', '10s'], include_lowest=True)
+
+
+## qcut
+
+# print(pd.qcut(x = df['global_sales'], q=4, precision=50).value_counts())
+
+# df['popularity_of_games_global'] = pd.qcut(x = df['global_sales'], q=[0,0.5,0.75,0.95,1], precision=50, labels=['low_tier', 'above_avg', 'popular_games', 'mega_hits'])
+
+
+## apply function
+
+sony = ['PS', 'PS2', 'PS3', 'PS4', 'PSP', 'PSV']
+nintendo = ['N64', 'GB', 'GBA', 'GC', 'Wii', 'WiiU', 'NSE','3DS', 'SNES']
+microsoft = ['XB','XB360', 'XOne']
+pc = ['PC']
+atari = ['2600']
+panasonic = ['3DO']
+sega = ['DC', "GG", 'SAT', 'SCD']
+
+def catagories(x):
+    if x in sony:
+        return 'Sony'
+    elif x in nintendo:
+        return 'Nintando'
+    elif x in microsoft:
+        return 'Microsoft'
+    elif x in pc:
+        return 'PC'
+    elif x in sega:
+        return 'Sega'
+    else:
+        return 'Other'
+    
+df['platform_company'] = df['platform'].apply(catagories)
+
+# import scipy.stats as stats
+
+# z_score = df.select_dtypes('float').apply(lambda x: stats.zscore(x))
+
+
+### corr()
+
+# corr_matrix = df.select_dtypes('float').corr()
+
+# sns.heatmap(corr_matrix)
+# plt.show()
+
+
+
+### group by operation
+
+# print(df.groupby('genre')['na_sales'].mean().sort_values(ascending=False))
+
+# sales_by_genre = df.groupby('genre')[['na_sales', 'jp_sales', 'eu_sales', 'other_sales']].mean().sort_values(by=['na_sales', 'jp_sales', 'eu_sales', 'other_sales'], ascending= False)
+
+# plt.figure(figsize=(12,8))
+# sns.heatmap(sales_by_genre, annot=True, cmap='Greens')
+# plt.show()
+
+### using platform_companies from above looping in user defined function
+
+# print(df.groupby('platform_company')['jp_sales'].agg('mean').sort_values(ascending=False))
+# print(df.groupby('platform_company')['jp_sales'].agg('count').sort_values(ascending=False))
+
+# print(df.groupby('platform_company')['jp_sales'].agg(['mean','median','count']).sort_values(by=['mean','median','count'],ascending=[False, False, False]))
+
+
+# print(df.groupby('platform_company')[['jp_sales', 'global_sales']].agg({'jp_sales': ['min', 'max', 'mean'], 'global_sales':['mean']}))
+
+
+### group by in multiple columns
+
+# print(df.groupby(['platform_company', 'decade'])[['global_sales']].sum())
+
+###using group by in two columns and using unstack to change view and plot
+platform_sales_per_decade = df.groupby(['platform_company', 'decade'])[['global_sales']].sum().unstack(-2)
+# platform_sales_per_decade.columns = platform_sales_per_decade.columns.get_level_values(1)
+# platform_sales_per_decade.plot.line()
+# plt.show()
+
+
+
+#pivot table, crosstab transpose
+
+# platform_sales_per_decade.T
+
+# df['popularity_of_games_global'] = pd.qcut(x = df['global_sales'], q=[0,0.5,0.75,0.95,1], precision=50, labels=['low_tier', 'above_avg', 'popular_games', 'mega_hits'])
+
+# print(df.pivot_table(values='jp_sales', index='popularity_of_games_global', columns='genre', aggfunc='mean'))
+
+# print(df.pivot_table(values='eu_sales', index='platform', columns='genre', aggfunc='sum', fill_value=0, margins='total_sum'))
+
+## same thing can be done by double group by and unstack
+
+# print(df.groupby(['platform', 'genre'])['eu_sales'].sum().unstack().fillna(0))
+
+## crosstab()
+# print(pd.crosstab(index=df['decade'], columns=df['genre']))
+
+# print(pd.crosstab(index=df['decade'], columns=df['genre'], values=df['eu_sales'], aggfunc='sum'))
+
+## same thing done by group by 
+# print(df.groupby(['decade', 'genre'])['eu_sales'].sum().unstack())
+
+
+
+
+### concatinate dataframes with pd.concat()
+
+
+# men60 = pd.read_csv('https://raw.githubusercontent.com/cajjster/data_files/main/men1960s.csv')
+# women60 = pd.read_csv('https://raw.githubusercontent.com/cajjster/data_files/main/women1960s.csv')
+
+# # print(pd.concat(objs=[men60, women60], ignore_index=True))
+
+# # print(pd.concat(objs=[men60, women60], keys=['Men60s', 'women60s']))
+
+# # print(pd.concat(objs=[men60,women60], axis=1))
+
+
+# ### concatinate the different df in a loop
+
+# men = [f"https://raw.githubusercontent.com/cajjster/data_files/main/men{i}s.csv" for i in range(1920,2021,10)]
+
+# women = [f"https://raw.githubusercontent.com/cajjster/data_files/main/women{i}s.csv" for i in range(1920,2021,10)]
+
+
+# mens_df = []
+
+# for file in men:
+#     df = pd.read_csv(file)
+#     mens_df.append(df)
+
+
+# swe_men = pd.concat(mens_df, keys=list(range(1920,2021,10)))
+
+# swe_women = pd.concat([pd.read_csv(file) for file in women], keys=list(range(1920,2021,10)))
+
+# swe_women.groupby('Name')['Count'].sum().sort_values(ascending=False)
+
+
+### join method with merge() 
+
+
+boys19 = pd.read_csv('https://raw.githubusercontent.com/cajjster/data_files/main/boys2019.csv')
+
+boys20 = pd.read_csv('https://raw.githubusercontent.com/cajjster/data_files/main/boys2020.csv')
+
+
+## outer join
+
+# print(boys19.merge(boys20, how='outer', on='Name', suffixes=['_2019', '_2020']))
+
+# print(boys19.merge(boys20, how='outer', on='Name', suffixes=['_2019', '_2020'], indicator=True).tail(50))
+
+
+## inner join
+# print(boys19.merge(boys20, how='inner', on='Name', suffixes=['_2019', '_2020'], indicator=True))
+
+## right join
+# print(boys19.merge(boys20, how='right', on='Name', suffixes=['_2019', '_2020'], indicator=True))
+
+## left join
+# print(boys19.merge(boys20, how='left', on='Name', suffixes=['_2019', '_2020'], indicator=True))
+
+
