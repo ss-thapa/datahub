@@ -209,6 +209,28 @@ ps3.nsmallest(n=5, columns='global_sales').loc[:, ('name', 'global_sales')]
 
 # print(ps3.sort_values(by='genre', ascending=True))
 # print(ps3.sort_values(by='year',ascending=False))
-print(ps3.sort_values(by= ['year','global_sales'], ascending=False))
+# print(ps3.sort_values(by= ['year','global_sales'], ascending=False))
 
 
+## agg functions 
+
+# print('Min Year', df['year'].min())
+# print('Max Year', df['year'].max())
+# print('Mean Year', df['year'].mean())
+# print('Median Year', df['year'].median())
+# print('Std Year', df['year'].std())
+# print('Count no of rows in year', df['year'].count())
+# print('Sum of eu_sales', df['eu_sales'].sum())
+# print('Mode name', df['name'].mode()[0])
+
+
+# print(df['global_sales'].quantile(0.99))
+
+# print(df['eu_sales'].agg(['min', 'max', 'mean', 'median', 'std', 'sum', 'count']))
+
+
+
+xbox_sales = df.loc[df['platform']== 'XB', ['na_sales', 'year']].groupby('year')['na_sales'].sum()
+
+xbox_sales.plot.bar()
+plt.show()
