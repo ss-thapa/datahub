@@ -230,8 +230,8 @@ ps3.nsmallest(n=5, columns='global_sales').loc[:, ('name', 'global_sales')]
 
 
 
-# xbox_sales = df.loc[df['platform']== 'XB', ['na_sales', 'year']].groupby('year')['na_sales'].sum()
-
+xbox_sales = df.loc[df['platform']== 'XB', ['na_sales', 'year']].groupby('year')['na_sales'].sum()
+print(xbox_sales)
 # xbox_sales.plot.bar()
 # plt.show()
 
@@ -256,29 +256,29 @@ df['decade'] = pd.cut(x = df['year'], bins = [1980,1989,1999,2009,2019], labels=
 
 ## apply function
 
-sony = ['PS', 'PS2', 'PS3', 'PS4', 'PSP', 'PSV']
-nintendo = ['N64', 'GB', 'GBA', 'GC', 'Wii', 'WiiU', 'NSE','3DS', 'SNES']
-microsoft = ['XB','XB360', 'XOne']
-pc = ['PC']
-atari = ['2600']
-panasonic = ['3DO']
-sega = ['DC', "GG", 'SAT', 'SCD']
+# sony = ['PS', 'PS2', 'PS3', 'PS4', 'PSP', 'PSV']
+# nintendo = ['N64', 'GB', 'GBA', 'GC', 'Wii', 'WiiU', 'NSE','3DS', 'SNES']
+# microsoft = ['XB','XB360', 'XOne']
+# pc = ['PC']
+# atari = ['2600']
+# panasonic = ['3DO']
+# sega = ['DC', "GG", 'SAT', 'SCD']
 
-def catagories(x):
-    if x in sony:
-        return 'Sony'
-    elif x in nintendo:
-        return 'Nintando'
-    elif x in microsoft:
-        return 'Microsoft'
-    elif x in pc:
-        return 'PC'
-    elif x in sega:
-        return 'Sega'
-    else:
-        return 'Other'
+# def catagories(x):
+#     if x in sony:
+#         return 'Sony'
+#     elif x in nintendo:
+#         return 'Nintando'
+#     elif x in microsoft:
+#         return 'Microsoft'
+#     elif x in pc:
+#         return 'PC'
+#     elif x in sega:
+#         return 'Sega'
+#     else:
+#         return 'Other'
     
-df['platform_company'] = df['platform'].apply(catagories)
+# df['platform_company'] = df['platform'].apply(catagories)
 
 # import scipy.stats as stats
 
@@ -320,7 +320,7 @@ df['platform_company'] = df['platform'].apply(catagories)
 # print(df.groupby(['platform_company', 'decade'])[['global_sales']].sum())
 
 ###using group by in two columns and using unstack to change view and plot
-platform_sales_per_decade = df.groupby(['platform_company', 'decade'])[['global_sales']].sum().unstack(-2)
+# platform_sales_per_decade = df.groupby(['platform_company', 'decade'])[['global_sales']].sum().unstack(-2)
 # platform_sales_per_decade.columns = platform_sales_per_decade.columns.get_level_values(1)
 # platform_sales_per_decade.plot.line()
 # plt.show()
