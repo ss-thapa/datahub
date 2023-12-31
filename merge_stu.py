@@ -74,11 +74,43 @@ courses_empty = all_coureses_with_students[all_coureses_with_students['student_i
 
 ## create a new table with student name and its partner name (using self join)
 
-
-student_with_partner = students.merge(students, how='inner', left_on='partner', right_on='student_id')[['name_x', 'name_y']]
-
+# student_with_partner = students.merge(students, how='inner', left_on='partner', right_on='student_id')[['name_x', 'name_y']]
 
 
 
+## top 3 students who did most number of enrollments
+
+# print(regs.merge(students, on='student_id').groupby(['student_id', 'name'])['name'].count().sort_values(ascending=False).head(3))
+
+##or 
+
+# sun = regs.groupby('student_id').agg(count_num = ('course_id', 'count'))
+
+# print(sun.merge(students, on='student_id')[['name', 'count_num']].sort_values(by='count_num', ascending=False).head(3))
+
+
+
+### top 3 student who have spent most money
+
+# total_tables = regs.merge(students, on="student_id").merge(courses, on='course_id')
+
+# print(total_tables.groupby(['student_id', 'name']).agg(total_sum=('price', 'sum')).sort_values(by='total_sum', ascending=False).head(3))
+
+
+
+total_table = delivery.merge(matches, left_on='match_id', right_on='id')
+
+# six_table = total_table[total_table['batsman_runs']== 6]
+
+# num_sixs = six_table.groupby('venue')['venue'].count()
+
+# num_matches = matches['venue'].value_counts()
+# print((num_sixs/num_matches).sort_values(ascending=False).head(3))
+
+
+
+print(total_table.groupby(['season', 'batsman'])['batsman_runs'].sum().reset_index().sort_values(by='batsman_runs', ascending=False).drop_duplicates(subset=['season'], keep='first').sort_values(by='season'))
+
+print(total_table.groupby(['season', 'batsman'])['batsman_runs'].sum().reset_index().sort_values(by='batsman_runs', ascending=False).first('season'))
 
 
