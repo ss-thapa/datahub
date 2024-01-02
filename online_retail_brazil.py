@@ -48,6 +48,29 @@ olist_orders_dataset['order_purchase_timestamp'] = pd.to_datetime(olist_orders_d
 # sns.catplot(data=sorted_df, x='product_category_name', y='total_count', kind='bar', height=7)
 # plt.show()
 
+## visual
+
+# merged_data_set = olist_orders_dataset.merge(olist_order_items_dataset, on='order_id').merge(olist_products_dataset, on='product_id')
+
+
+# sns.relplot(data=merged_data_set, x='product_weight_g', y='freight_value', kind='scatter')
+# plt.show()
+
+# sns.displot(kind='hist', data=merged_data_set, x='product_category_name')
+# plt.show()
+
+
+
+# merge_data = olist_orders_dataset.merge(olist_customers_dataset, on='customer_id', how='right')
+
+# only_2018 = merge_data[merge_data['order_purchase_timestamp'].dt.year == 2018]
+
+# only_2018['customer_state'].value_counts()
+
+# only_2018['customer_city'].value_counts().head(10)
+
+
+
 
 
 
