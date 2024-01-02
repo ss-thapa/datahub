@@ -253,7 +253,78 @@ df['total_cost'] = df['Quantity'] * df['UnitPrice']
 ## What is the distribution of transaction quantities for the top 5 countries?
 
 
+# top_5_countries = df['Country'].value_counts().head(5).index
 
+# df_top_5_countries = df[df['Country'].isin(top_5_countries)]
+
+# df_top_5_countries.groupby('Country').agg(total_count=('InvoiceNo', 'count')).sort_values(by='total_count', ascending=False)
+
+
+## What is the average total cost per transaction for each country?
+
+# average_total_cost = df.groupby('Country').agg(total_average=('total_cost', 'mean')).sort_values(by='total_average', ascending=False)
+
+# sns.catplot(kind='bar', x='Country', y='total_average', data=average_total_cost)
+# plt.xticks(rotation=90)
+# plt.show()
+
+
+
+## What is the hourly distribution of transactions during the day?
+
+# df['hour_of_day'] = df['InvoiceDate'].dt.hour
+
+# sns.catplot(kind='count', x='hour_of_day',data=df)
+# plt.show()
+
+
+## What is the distribution of the quantity of products sold for the top 10 products?
+
+# top_10_products = df.groupby('Description').agg(tota_sum=('Quantity', 'sum')).sort_values(by='tota_sum',ascending=False).head(10)
+
+# sns.catplot(kind='bar', x='Description', y='tota_sum', data=top_10_products)
+# plt.xticks(rotation=90)
+# plt.show()
+
+
+##How does the unit price vary across different months?
+
+# df['month'] = df['InvoiceDate'].dt.to_period('M')
+
+
+# sns.catplot(kind='bar', x='month', y='UnitPrice', data=df, errorbar=None)
+# plt.xticks(rotation=45)
+# plt.show()
+
+
+
+## What is the distribution of transaction quantities for the top 5 product categories?
+
+
+# top_categories_quantity = df.groupby('StockCode')['Quantity'].sum().sort_values(ascending=False).head(5).index
+
+# df_top_categories_quantity = df[df['StockCode'].isin(top_categories_quantity)]
+
+# sns.catplot(kind='box', x='StockCode', y='Quantity', data=df_top_categories_quantity, showfliers=False)
+# plt.xticks(rotation=45)
+# plt.show()
+
+
+## What is the trend of total sales for each product category over time?
+
+# df['month'] = df['InvoiceDate'].dt.to_period("M")
+
+# total_sales_by_category = df.groupby(['StockCode', 'month'])['total_cost'].sum().unstack()
+
+
+## How does the distribution of unit price vary for different days of the week?
+
+# plt.figure(figsize=(12, 6))
+# sns.boxplot(x='DayOfWeek', y='UnitPrice', data=df, showfliers=False, palette='coolwarm')
+# plt.title('Distribution of Unit Price Across Days of the Week')
+# plt.xlabel('Day of the Week')
+# plt.ylabel('Unit Price')
+# plt.show()
 
 
 
