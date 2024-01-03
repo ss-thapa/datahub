@@ -63,8 +63,74 @@ df = pd.read_csv('/Users/sunilthapa/Desktop/programming/datahub/datas/titanic/tr
 
 ### univariate analysis on categorical column 
 
+## survived Column 0 means dead 1 means survived
+
+# df['Survived'].value_counts().plot(kind='bar')
+# plt.show()
+
+
+# df['Survived'].value_counts().plot(kind='pie', autopct='%0.1f%%')
+# plt.show()
+
+# print(df['Survived'].isnull().sum())
+
+
+# df['Pclass'].value_counts()
+
+
+# df['Pclass'].value_counts().plot(kind='bar')
+# plt.show()
+
+
+# print(df['Sex'].value_counts())
+
+
+# df['Sex'].value_counts().plot(kind='bar')
+# plt.show()
 
 
 
+# print(df['SibSp'].value_counts())
 
+
+# df['SibSp'].value_counts().plot(kind='bar')
+# plt.show()
+
+
+# print(df['Parch'].value_counts())
+
+
+# df['Parch'].value_counts().plot(kind='bar')
+# plt.show()
+
+#### Paren chaild and siblings can be mered to from a new column called family_size
+#### create a new col called is_alone
+
+
+# print(df['Embarked'].value_counts())
+
+
+# df['Embarked'].value_counts().plot(kind='bar')
+# plt.show()
+
+
+### conclusion for mixed column need to do feature engineering 
+
+
+
+### bivariate analysis
+
+# print(pd.crosstab(df['Survived'], df['Pclass']))    ## cross tabulation or contingency table
+
+# print(pd.crosstab(df['Survived'], df['Pclass'], normalize='columns')*100)     ## changing to percentage 
+
+
+
+#print(pd.crosstab(df['Survived'], df['Sex'], normalize='columns')*100)    ## between survived and sex
+
+
+# print(pd.crosstab(df['Survived'], df['Embarked'], normalize='columns')*100) 
+
+
+print(pd.crosstab(df['Pclass'], df['Embarked'], normalize='columns')*100) 
 
