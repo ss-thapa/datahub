@@ -209,5 +209,6 @@ df['deck'] = df['Cabin'].str[0]
 
 # print(pd.crosstab(df['deck'], df['Pclass']))
 
-pd.crosstab(df['deck'], df['Survived'], normalize='columns').plot(kind='bar', stacked=True)
-plt.show()
+pd.crosstab(df['deck'], df['Survived'], normalize='columns')
+
+
