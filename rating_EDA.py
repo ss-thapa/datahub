@@ -173,7 +173,92 @@ df['age'].describe()
 
 ## ratings vs location
 
-print(pd.crosstab(df['overall_rating'], df['location'], normalize='columns')*100)
+# print(pd.crosstab(df['overall_rating'], df['location'], normalize='columns')*100)
 
 
 # print(df[df['location'] == 'Market City, MY'])
+
+# sns.catplot(kind='bar', data=df, x='location', y='overall_rating')
+# plt.show()
+
+
+df.groupby('location').agg({
+    'overall_rating': ['mean', 'min', 'max'],
+    'food_rating': ['mean', 'min', 'max'],
+    'service_rating': ['mean', 'min', 'max']})
+
+
+## rating vs gender
+
+# print(df.groupby('gender').agg({
+#     'overall_rating': ['mean', 'min', 'max'],
+#     'food_rating': ['mean', 'min', 'max'],
+#     'service_rating': ['mean', 'min', 'max']}))
+
+# print(pd.crosstab(df['gender'], df['overall_rating'], normalize='columns')*100)
+
+
+## rating and year of birth
+
+# sns.histplot(data=df, x='decade', y='overall_rating')
+# plt.show()
+
+# print(pd.crosstab(df['decade'], df['overall_rating'], normalize='columns')*100)
+
+
+## ratings and marital status
+
+df.groupby('marital_status').agg({
+    'overall_rating': ['mean', 'min', 'max'],
+    'food_rating': ['mean', 'min', 'max'],
+    'service_rating': ['mean', 'min', 'max']})
+
+
+# print(df['marital_status'].value_counts())
+
+# print(pd.crosstab(df['marital_status'], df['overall_rating'], normalize='columns')*100)
+
+
+## rating and activity
+
+# print(df.groupby('activity').agg({
+#     'overall_rating': ['mean', 'min', 'max'],
+#     'food_rating': ['mean', 'min', 'max'],
+#     'service_rating': ['mean', 'min', 'max']}))
+
+
+# print(df['activity'].value_counts())
+
+# print(pd.crosstab(df['activity'], df['overall_rating'], normalize='columns')*100)
+
+
+## ratings and budget 
+
+# print(df.groupby('budget').agg({
+#     'overall_rating': ['mean', 'min', 'max'],
+#     'food_rating': ['mean', 'min', 'max'],
+#     'service_rating': ['mean', 'min', 'max']}))
+
+
+# print(df['budget'].value_counts())
+
+# print(pd.crosstab(df['budget'], df['overall_rating'], normalize='columns')*100)
+
+
+
+## ratings and cuisines
+
+# print(df.groupby('cuisines').agg({
+#     'overall_rating': ['mean', 'min', 'max'],
+#     'food_rating': ['mean', 'min', 'max'],
+#     'service_rating': ['mean', 'min', 'max']}))
+
+
+# print(df['cuisines'].value_counts())
+
+# print(pd.crosstab(df['cuisines'], df['overall_rating'], normalize='columns')*100)
+
+
+
+
+
