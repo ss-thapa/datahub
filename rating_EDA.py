@@ -259,6 +259,78 @@ df.groupby('marital_status').agg({
 # print(pd.crosstab(df['cuisines'], df['overall_rating'], normalize='columns')*100)
 
 
+## ratings and alcohol
 
+
+# print(df.groupby('alcohol').agg({
+#     'overall_rating': ['mean', 'min', 'max'],
+#     'food_rating': ['mean', 'min', 'max'],
+#     'service_rating': ['mean', 'min', 'max']}))
+
+
+# print(df['alcohol'].value_counts())
+
+# print(pd.crosstab(df['alcohol'], df['overall_rating'], normalize='columns')*100)
+
+
+## ratings and smoker
+
+# print(df.groupby('smoker').agg({
+#     'overall_rating': ['mean', 'min', 'max'],
+#     'food_rating': ['mean', 'min', 'max'],
+#     'service_rating': ['mean', 'min', 'max']}))
+
+
+# print(df['smoker'].value_counts())
+
+# print(pd.crosstab(df['alcohol'], df['overall_rating'], normalize='columns')*100)
+
+
+# sns.catplot(kind='bar', data=df, x='smoker', y='overall_rating')
+# sns.catplot(kind='bar', data=df, x='smoker', y='food_rating')
+# sns.catplot(kind='bar', data=df, x='smoker', y='service_rating')
+# plt.show()
+
+
+
+## ratings and frequency 
+
+
+# print(df.groupby('frequent').agg({
+#     'overall_rating': ['mean', 'min', 'max'],
+#     'food_rating': ['mean', 'min', 'max'],
+#     'service_rating': ['mean', 'min', 'max']}))
+
+
+# print(df['frequent'].value_counts())
+
+# print(pd.crosstab(df['frequent'], df['overall_rating'], normalize='columns')*100)
+
+
+# sns.catplot(kind='bar', data=df, x='frequent', y='overall_rating')
+# sns.catplot(kind='bar', data=df, x='frequent', y='food_rating')
+# sns.catplot(kind='bar', data=df, x='frequent', y='service_rating')
+# plt.show()
+
+
+
+## ratings decade age
+
+
+# print(df.groupby('decade_age').agg({
+#     'overall_rating': ['mean', 'min', 'max'],
+#     'food_rating': ['mean', 'min', 'max'],
+#     'service_rating': ['mean', 'min', 'max']}))
+
+
+# print(df['decade_age'].value_counts())
+
+# print(pd.crosstab(df['decade_age'], df['overall_rating'], normalize='columns')*100)
+
+
+# sns.catplot(kind='bar', data=df, x='decade_age', y='overall_rating')
+# sns.catplot(kind='bar', data=df, x='decade_age', y='food_rating')
+# sns.catplot(kind='bar', data=df, x='decade_age', y='service_rating')
+# plt.show()
 
 
