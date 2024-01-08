@@ -123,7 +123,33 @@ df[df['delivery_time_taken'] < (df['delivery_time_taken'].mean())].groupby('rest
 
 # how many times did any restro took max delivery time to deliver food 
 
-print(df[df['delivery_time_taken'] == (df['delivery_time_taken'].max())]['restaurant_name'].value_counts())
+df[df['delivery_time_taken'] == (df['delivery_time_taken'].max())]['restaurant_name'].value_counts()
+
+# Which zone has the most sales?
+
+# df.groupby('zone')['order_id'].count().plot(kind='bar')
+# plt.xticks(rotation = 45)
+# plt.show()
+
+
+
+## Cross tab function
+
+
+#print(pd.crosstab(index=df['cuisine'], colnames=df['payment_mode']))      ## this gives frequency by default
+
+#print(pd.crosstab(index=df['cuisine'], columns=df['payment_mode'], values=df['order_amount'], aggfunc='sum'))     # this gives sum of sale according to the payment mode and cusinnes 
+
+#print(pd.crosstab(index=df['cuisine'], columns=df['payment_mode'], rownames=['cuisine_name'],colnames=['payment_done_by']))     # this changes the name of the row and column
+
+#print(pd.crosstab(index=df['cuisine'], columns=[df['payment_mode'], df['zone']]))    # adding three columns
+
+#print(pd.crosstab(index=df['cuisine'], columns=df['payment_mode'],margins=True, normalize='index' )*100)  # normalize according to the column or index or overall 
+
+
+
+
+
 
 
 
