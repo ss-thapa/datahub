@@ -188,6 +188,97 @@ numerical_columns = ['discount', 'profit', 'quantity', 'total_sales_amount','day
 
 ## total sales amount and all others relationship
 
+#total sales amount and category
+# sns.catplot(kind='bar', data=df, x='category', y='total_sales_amount', errorbar=None, estimator='sum')
+# plt.show()
+
+
+# print(df.groupby('category')['total_sales_amount'].describe())
+
+
+## total sales amount and order_priority
+
+# sns.catplot(kind='bar', data=df, x='category', y='total_sales_amount', errorbar=None, estimator='sum')
+# plt.show()
+
+
+# print(df.groupby('order_priority')['total_sales_amount'].describe())
+
+
+# print(df['total_sales_amount'].describe())
+
+# df1 = df[df['profit'] < 0]
+
+# # df2 = df[df['profit'] > 0]
+
+
+
+## total sales amount and region
+
+
+# sns.catplot(kind='bar', data=df, x='region', y='total_sales_amount', errorbar=None, estimator='sum')
+# plt.xticks(rotation=45)
+# plt.show()
+
+# sns.catplot(kind='bar', data=df, x='region', y='total_sales_amount', errorbar=None, estimator='mean')
+# plt.xticks(rotation=45)
+# plt.show()
+
+# print(df.groupby('region')['total_sales_amount'].describe())
+
+
+
+# total sales amount and segment
+
+# sns.catplot(kind='bar', data=df, x='segment', y='total_sales_amount', errorbar=None, estimator='sum')
+# plt.title('sum')
+# plt.xticks(rotation=45)
+
+
+# sns.catplot(kind='bar', data=df, x='segment', y='total_sales_amount', errorbar=None, estimator='mean')
+# plt.title('average')
+# plt.xticks(rotation=45)
+# plt.show()
+
+# print(df.groupby('segment')['total_sales_amount'].describe())
+
+
+
+
+
+## max quantity sold as per category and sub category
+
+# print(df.groupby(['category','sub_category'])['quantity'].sum())
+
+# sns.catplot(kind='bar', data=df, x= 'sub_category', y='quantity', estimator='sum', hue='category', errorbar=None)
+# plt.xticks(rotation=45)
+# plt.show()
+
+
+## max quantity sold as per which ship mode
+
+df.groupby('ship_mode')['quantity'].sum()
+
+# df.groupby('ship_mode')['quantity'].sum().plot(kind='bar')
+# plt.xticks(rotation=45)
+# plt.show()
+
+
+
+
+## reasons for high shipping cost
+
+# df['shipping_cost'].plot(kind='box')
+# plt.show()
+
+# print(df.groupby('region')['shipping_cost'].mean())
+
+# print(df.groupby('market2')['shipping_cost'].mean())
+
+
+
+
+# print(pd.crosstab(index=df['region'], columns=df['ship_mode'],normalize='columns')*100)
 
 
 
