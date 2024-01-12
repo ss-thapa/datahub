@@ -2,6 +2,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy import stats
 pd.set_option('display.max_column', None)
 
 
@@ -281,8 +282,46 @@ df.groupby('ship_mode')['quantity'].sum()
 # print(pd.crosstab(index=df['region'], columns=df['ship_mode'],normalize='columns')*100)
 
 
+# print(df['total_sales_amount'].median())
+# print(df['country'])
+
+# print(df['total_sales_amount'])
+
+
+std_of_total_sales = df['total_sales_amount'].std()
+mean_total_sales = df['total_sales_amount'].mean()
+
+CV_total_sales = (std_of_total_sales/mean_total_sales)*100
+
+
+std_shipping_cost = df['shipping_cost'].std()
+mean_shipping_cost = df['shipping_cost'].mean()
+
+CV_shipping_cost = (std_shipping_cost/mean_shipping_cost)*100
 
 
 
+# sns.histplot(data=df, x='total_sales_amount', bins=200)
+# plt.show()
 
 
+
+# pd.crosstab(index=df['order_priority'], columns=df['ship_mode']).plot(kind='bar')
+# plt.show()
+
+df['total_sales_amount'].mean()
+stats.trim_mean(df['total_sales_amount'], 0.1)
+
+# sns.relplot(data=df, x='total_sales_amount', y='cost_per_unit', kind='scatter')
+# plt.show()
+
+
+
+df['total_sales_amount'].quantile(0.75)
+
+# sns.relplot(kind='scatter',data=df, x='shipping_cost', y='total_sales_amount')
+# plt.show()
+
+
+
+df[['cost_per_unit', 'total_sales_amount']].corr()
