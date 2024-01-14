@@ -131,3 +131,41 @@ probabilities = np.exp(probabilities)
 # plt.show()
 
 
+
+
+## iris data set PDF
+
+df = sns.load_dataset('iris')
+
+# fig, axes = plt.subplots(2, 2, figsize=(12, 8))
+# Plot KDE plots for each variable in different subplots
+# sns.kdeplot(data=df, x='sepal_length', hue='species', ax=axes[0, 0])
+# sns.kdeplot(data=df, x='sepal_width', hue='species', ax=axes[0, 1])
+# sns.kdeplot(data=df, x='petal_length', hue='species', ax=axes[1, 0])
+# sns.kdeplot(data=df, x='petal_width', hue='species', ax=axes[1, 1])
+
+# plt.tight_layout()
+# plt.show()  
+
+## conclusion is petal_width and petal_length columns can be used in machine learning model
+
+
+
+## titanic
+
+# df1 = sns.load_dataset('titanic')
+
+# sns.kdeplot(data=df1, x='age', hue='survived')
+# plt.show()
+
+
+## CDF
+
+
+# sns.kdeplot(data=df, x='petal_width', hue='species')
+# sns.ecdfplot(data=df, x='petal_width', hue='species')
+# plt.show()
+
+
+
+
