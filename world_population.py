@@ -13,11 +13,7 @@ df_population = pd.read_csv('/Users/sunilthapa/Desktop/programming/datahub/datas
 
 df1 = df1.drop(columns=['fertility_rate', 'median_age'])
 
-
-
 df_stats = pd.merge(df1, df2, on='country')
-
-
 
 columns = ['country', 'region', 'land_area_x', 'population', 'yearly_change','net_change', 'density', 'land_area_y', 'net_migrants',
        'fertility_rate', 'median_age', 'population_urban', 'world_share']
