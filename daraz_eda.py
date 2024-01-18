@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from datetime import datetime
 import numpy as np
-import re
+
 pd.set_option('display.max_column', None)
 pd.set_option('display.max_colwidth', None)
 
@@ -65,40 +65,53 @@ df = df.drop(index_to_delete)
 
 
 
-
-#### feature enginnering on product_name column about price
+### feature enginnering on product_name column about price
 
 df['contains_keywords'] = df['product_name'].str.contains(r'\b(combo|pack|pcs)\b', case=False, regex=True)
 
-
-# df1 = df[df['contains_keywords'] == True]
-
-
-df['contains_numeric'] = df['product_name'].str.contains('\d', regex=True)
-
-
-# df2 = df[df['contains_numeric'] == True]
-
+df['contains_numeric'] = df['product_name'].str.contains(r'\d', regex=True)
 
 df['extracted_numeric'] = df[df['contains_keywords'] & df['contains_numeric']]['product_name'].str.extract(r'(\b\d\b)')
-
 
 pattern = r'\b(?:Five|Six|Seven|One|Two|Three|Four|Eight|Nine|Ten)\b'
 
 # Create a new column indicating whether the product_name contains any of the specified words
 df['contains_numeric_words'] = df['product_name'].str.contains(pattern, case=False, regex=True)
 
+
 df =df[~(df['contains_numeric_words'] & df['contains_keywords'])]
 
+df = df.drop(columns=['contains_keywords', 'contains_numeric', 'contains_numeric_words'])
 
-# print(df[df['extracted_numeric']  'NaN'])
 
-# # df['extracted_numeric']=df['extracted_numeric'].astype(int)
 
-# # df['actual_current_price'] = df['current_price'] / df['extracted_numeric']
+df['extracted_numeric'] = df['extracted_numeric'].fillna(0).astype(int)
 
-# # columns =['contains_keywords','contains_numeric_words', 'contains_numeric' ]
 
+
+df['price_of_1'] = np.where(df['extracted_numeric'] != 0, df['current_price'] / df['extracted_numeric'], df['current_price'])
+
+
+df = df.drop(columns=['extracted_numeric'])
+
+
+### creating brand name category
+
+
+brand_mapping = {'shangri': 'Shangrila','police':'police', 'being human':'being human', 'doro':'Doro', 'nyptra':'nyptra', 'hummel':'hummel',
+                'hills and clouds':'Hills And Clouds', 'kilometer':'kilometer', 'bossini':'Bossini', 'piazzaitalia':'piazzaitalia','zamz':'zamz','livingtex':'livingtex',
+                'trikaya':'trikaya','oxemberg':'oxemberg', 'creative touch':'creative touch','dockers':'dockers', 'anta':'Anta', 'logo':'logo', 'fuloo':'Fuloos',
+                'j.fisher':'J.Fisher','Gents park':'Gents Park', 'wrogn':'wrogn', 'pepe jeans':'pepe jeans', 'Van heusen':'Van Heusen', 'Benetton':'Benetton', 'Bumchums':'Bumchums',
+                'Gymwolf':'Gymwolf','Binay Embroidery':'Binay Embroidery'}
+
+df['brand_name'] = 'Other'
+
+# Loop through the dictionary and update 'brand_name' based on the word found in 'product_name'
+for word, brand_name in brand_mapping.items():
+    df.loc[df['product_name'].str.contains(word, case=False), 'brand_name'] = brand_name
+
+# If 'brand_name' is still 'Other', it means no match was found
+df.loc[df['brand_name'] == 'Other', 'brand_name'] = 'Other'
 
 
 
